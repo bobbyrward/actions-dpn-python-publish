@@ -56,23 +56,25 @@ async function initialize() {
 }
 
 
-function checkForWheels(regex: RegExp): boolean {
-    var found: boolean = false;
+function findWheels(regex: RegExp): string[] {
+    var wheels: string[] = [];
 
     const dir = fs.readdirSync("dist");
 
     for (const filename of dir) {
       if (regex.exec(filename)) {
-        found = true;
-        break;
+        wheels.push(`dist/${filename}`);
       }
     }
 
-    return found;
+    return wheels;
 }
 
-async function uploadWheels(venv_dir: string, hostname: string, username: string, password: string): Promise<number> {
-  return await venvExec( venv_dir, "twine", ["upload"], {
+async function uploadWheels(venv_dir: string, wheels: string[], hostname: string, username: string, password: string): Promise<number> {
+
+  const args: string[] = ["upload"].concat(wheels);
+
+  return await venvExec( venv_dir, "twine", args, {
       env: {
         TWINE_REPOSITORY_URL: `https://${hostname}/simple/`,
         TWINE_USERNAME: username,
@@ -97,13 +99,17 @@ async function run() {
       throw new Error("Uploads are only allowed to private package indexes");
     }
 
-    if (!checkForWheels(/\.whl$/)) {
-      throw new Error("Check for wheels");
+    const wheels: string[] = findWheels(/\.whl$/);
+
+    if (wheels.length == 0) {
+      throw new Error("Found no matching wheels");
     }
+
+    core.info(`Found wheels: ${wheels}`);
 
     const venv_dir: string = await initialize();
 
-    await uploadWheels(venv_dir, pypi_hostname, pypi_username, pypi_password);
+    await uploadWheels(venv_dir, wheels, pypi_hostname, pypi_username, pypi_password);
 
   } catch (error) {
     core.setFailed(error.message);
