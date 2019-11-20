@@ -1,0 +1,32 @@
+{
+  "name": "actions-dpn-python-version-check",
+  "version": "1.0.1",
+  "private": true,
+  "description": "Checks for version conflicts against existing packages",
+  "main": "lib/main.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bobbyrward/actions-dpn-python-version-check"
+  },
+  "keywords": [
+    "actions",
+    "node",
+    "setup"
+  ],
+  "author": "YourNameOrOrganization",
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.1.0",
+    "@actions/exec": "^1.0.1",
+    "@actions/io": "^1.0.1",
+    "@types/node": "^12.0.4",
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.8",
+    "typescript": "^3.5.1"
+  },
+  "devDependencies": {}
+}

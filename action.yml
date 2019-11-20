@@ -1,0 +1,16 @@
+name: 'Python Package Publishing'
+description: 'Publish python packages *only* to a private repo'
+author: 'bobby.ward@inmar.com'
+inputs:
+  pypi_hostname:
+    description: 'Hostname of the pypi server'
+    required: true
+  pypi_username:
+    description: 'Username for the pypi server'
+    required: true
+  pypi_password:
+    description: 'Password for the pypi server'
+    required: true
+runs:
+  using: 'node12'
+  main: 'lib/main.js'
