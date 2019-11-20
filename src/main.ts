@@ -3,7 +3,7 @@ import * as exec from '@actions/exec';
 import * as io from '@actions/io';
 import * as path from 'path';
 // import * as fs from 'fs';
-import { promises as fs } from 'fs';
+import * as fs from 'fs';
 
 // const fs = require("fs/promises");
 
@@ -56,14 +56,13 @@ async function initialize() {
 }
 
 
-async function checkForWheels(regex: RegExp): Promise<boolean> {
+function checkForWheels(regex: RegExp): boolean {
     var found: boolean = false;
 
-    // const dir = await fs.opendir("dist");
-    const dir = await fs.opendir("src");
+    const dir = fs.readdirSync("dist");
 
-    for await (const dirent of dir) {
-      if (regex.exec(dirent.name)) {
+    for (const filename of dir) {
+      if (regex.exec(filename)) {
         found = true;
         break;
       }
@@ -98,7 +97,7 @@ async function run() {
       throw new Error("Uploads are only allowed to private package indexes");
     }
 
-    if (! await checkForWheels(/\.whl$/)) {
+    if (!checkForWheels(/\.whl$/)) {
       throw new Error("Check for wheels");
     }
 
