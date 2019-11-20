@@ -1,8 +1,8 @@
 {
-  "name": "actions-dpn-python-version-check",
-  "version": "1.0.1",
+  "name": "actions-dpn-python-publish",
+  "version": "1.0.0",
   "private": true,
-  "description": "Checks for version conflicts against existing packages",
+  "description": "Publish python packages *only* to a private repo",
   "main": "lib/main.js",
   "scripts": {
     "build": "tsc",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bobbyrward/actions-dpn-python-version-check"
+    "url": "git+https://github.com/bobbyrward/actions-dpn-python-publish"
   },
   "keywords": [
     "actions",
