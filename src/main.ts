@@ -2,10 +2,7 @@ import * as core from '@actions/core';
 import * as exec from '@actions/exec';
 import * as io from '@actions/io';
 import * as path from 'path';
-// import * as fs from 'fs';
 import * as fs from 'fs';
-
-// const fs = require("fs/promises");
 
 
 /// Run a command inside the virtual env
@@ -17,7 +14,8 @@ async function venvExec(venv_dir, executable, args, options?) {
 
 /// Create the virtualenv
 async function createVenv(venv_dir) {
-  await exec.exec("python", ["-m", "venv", venv_dir])
+  await exec.exec("pip", ["install", "virtualenv"])
+  await exec.exec("python", ["-m", "virtualenv", venv_dir])
 }
 
 
@@ -49,7 +47,7 @@ async function initialize() {
   // Create the virtualenv
   await createVenv(venv_dir)
 
-  // Install flake8 & black
+  // Install twine
   await venvExec(venv_dir, "pip", ["install", "twine"]);
 
   return venv_dir;
